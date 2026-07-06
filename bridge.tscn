@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://droppatvo1ad0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j8kuq"]
+size = Vector3(0.4, 1.8, 0.4)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_j8kuq"]
+size = Vector2(5, 2.5)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qve22"]
+
+[node name="Bridge" type="Node3D" unique_id=1631968661]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1461005143]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.037991, 0.88856936, 0.019553065)
+shape = SubResource("BoxShape3D_j8kuq")
+debug_color = Color(0.34250474, 0.51754737, 0.23644683, 0.8156863)
+
+[node name="Floor" type="MeshInstance3D" parent="." unique_id=1626423521]
+mesh = SubResource("PlaneMesh_j8kuq")
+
+[node name="Table" type="MeshInstance3D" parent="." unique_id=1568992929]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3850575, 0.74299073, 0)
+mesh = SubResource("PlaneMesh_qve22")
+
+[node name="Label3D" type="Label3D" parent="Table" unique_id=1537703030]
+transform = Transform3D(-4.371139e-08, 1, 4.371139e-08, 0, -4.371139e-08, 1, 1, 4.371139e-08, 1.9106855e-15, 0, 0.01, 0)
+text = "Map goes here"

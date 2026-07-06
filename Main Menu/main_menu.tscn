@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://cwt2jo64wwjm8"]
+
+[ext_resource type="Script" uid="uid://bih5eui5l1ndr" path="res://Main Menu/mm_buttons.gd" id="1_06t4h"]
+[ext_resource type="Script" uid="uid://ch613x63ua1xy" path="res://Main Menu/join_menu.gd" id="2_nb5b5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_j8kuq"]
+font_size = 30
+
+[node name="MainMenu" type="Control" unique_id=353077980]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Buttons" type="VBoxContainer" parent="." unique_id=526327583]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.441
+anchor_bottom = 0.998
+offset_right = -0.03201294
+offset_bottom = 0.29595947
+alignment = 1
+script = ExtResource("1_06t4h")
+
+[node name="host game" type="Button" parent="Buttons" unique_id=2007437358]
+layout_mode = 2
+text = "Host game"
+
+[node name="join Game" type="Button" parent="Buttons" unique_id=1483521984]
+layout_mode = 2
+text = "Join game"
+
+[node name="Options" type="Button" parent="Buttons" unique_id=2097083393]
+layout_mode = 2
+text = "Options"
+
+[node name="Exit" type="Button" parent="Buttons" unique_id=501801674]
+layout_mode = 2
+text = "Exit game"
+
+[node name="JoinMenu" type="Panel" parent="." unique_id=1845265020]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.21800001
+anchor_top = 0.102000006
+anchor_right = 0.734
+anchor_bottom = 0.66200006
+offset_left = -0.13601685
+offset_top = -0.09600067
+offset_right = 0.4319458
+offset_bottom = 0.023956299
+script = ExtResource("2_nb5b5")
+
+[node name="Cont" type="VBoxContainer" parent="JoinMenu" unique_id=1565353597]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = 4.0
+offset_right = 1.0
+offset_bottom = 1.0
+
+[node name="Title" type="Label" parent="JoinMenu/Cont" unique_id=1895893997]
+layout_mode = 2
+text = "Join game"
+label_settings = SubResource("LabelSettings_j8kuq")
+horizontal_alignment = 1
+
+[node name="plrname" type="LineEdit" parent="JoinMenu/Cont" unique_id=774378252]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+placeholder_text = "Custom name"
+alignment = 1
+
+[node name="IP_line" type="LineEdit" parent="JoinMenu/Cont" unique_id=1469958393]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+placeholder_text = "Server IP:"
+alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="JoinMenu/Cont" unique_id=1921608741]
+layout_mode = 2
+alignment = 1
+
+[node name="Cancel" type="Button" parent="JoinMenu/Cont/Buttons" unique_id=1673625974]
+layout_mode = 2
+text = "Cancel"
+
+[node name="Join" type="Button" parent="JoinMenu/Cont/Buttons" unique_id=178725736]
+layout_mode = 2
+text = "Join"
