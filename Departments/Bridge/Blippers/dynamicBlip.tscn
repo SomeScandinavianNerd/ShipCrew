@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://b8mm5pfxh8ovu"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_g4v7s"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="Blip" type="MeshInstance3D" unique_id=322668590]
+mesh = SubResource("BoxMesh_g4v7s")

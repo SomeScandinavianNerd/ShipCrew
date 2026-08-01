@@ -1,0 +1,120 @@
+[gd_scene format=3 uid="uid://droppatvo1ad0"]
+
+[ext_resource type="Script" uid="uid://tcy0tp13x3pk" path="res://Departments/Bridge/bridge.gd" id="1_5fcxd"]
+[ext_resource type="Script" uid="uid://cohgf6dnjppwe" path="res://Departments/Bridge/holodisc.gd" id="2_yexxc"]
+[ext_resource type="Script" uid="uid://ctp6m75h7cqku" path="res://Departments/Bridge/toggle_switch.gd" id="3_3dx82"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_j8kuq"]
+size = Vector2(5, 2.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_g4v7s"]
+size = Vector3(1, 0.3970337, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5fcxd"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fvvxs"]
+material = SubResource("StandardMaterial3D_5fcxd")
+height = 0.040649414
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_g4v7s"]
+height = 0.051514402
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_57qmd"]
+albedo_color = Color(0.20784314, 0.6392157, 0.1254902, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yf5fn"]
+material = SubResource("StandardMaterial3D_57qmd")
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="Curve3D" id="Curve3D_fvvxs"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 1.035, 0.465, 0, 0, 0, 0, -0.08, 0.02, 0, 0, 0, 0, 1.42, 0.13, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yexxc"]
+resource_local_to_scene = true
+specular_mode = 2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_g4v7s"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_yexxc")
+size = Vector2(1.4, 1.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_57qmd"]
+size = Vector3(0.39, 0.1, 0.82)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yexxc"]
+size = Vector3(0.2, 0.1, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
+size = Vector3(0.2, 0.1, 0.1)
+
+[node name="Bridge" type="Node3D" unique_id=1631968661]
+script = ExtResource("1_5fcxd")
+mapScene = "res://map_space.tscn"
+
+[node name="Floor" type="MeshInstance3D" parent="." unique_id=1626423521]
+mesh = SubResource("PlaneMesh_j8kuq")
+
+[node name="Holotable" type="MeshInstance3D" parent="." unique_id=1938014181]
+transform = Transform3D(2.3228402, 0, 0, 0, 1, 0, 0, 0, 2.3228402, 0, 0.15310669, 0)
+mesh = SubResource("BoxMesh_g4v7s")
+
+[node name="Holodisc" type="MeshInstance3D" parent="Holotable" unique_id=139843676]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.32614613, 0)
+transparency = 0.5
+mesh = SubResource("CylinderMesh_fvvxs")
+script = ExtResource("2_yexxc")
+
+[node name="Toucher" type="Area3D" parent="Holotable/Holodisc" unique_id=1882349402]
+
+[node name="Touchshaper" type="CollisionShape3D" parent="Holotable/Holodisc/Toucher" unique_id=425480955]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0042625666, 0)
+shape = SubResource("CylinderShape3D_g4v7s")
+
+[node name="Playerblock" type="MeshInstance3D" parent="Holotable/Holodisc" unique_id=2023279819]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.10448122, 0)
+mesh = SubResource("BoxMesh_yf5fn")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=412534693]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9172204, 0)
+
+[node name="CamPath" type="Path3D" parent="." unique_id=106911934]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4885895, 1.7755809, 0)
+curve = SubResource("Curve3D_fvvxs")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="CamPath" unique_id=830641945]
+transform = Transform3D(7.549788e-08, -0.40980056, -0.91214615, 0, 0.91213685, -0.40980473, 0.99999976, 3.093908e-08, 6.886512e-08, 0, 0, 0)
+loop = false
+
+[node name="BridgeCam" type="Camera3D" parent="CamPath/PathFollow3D" unique_id=1752692304]
+transform = Transform3D(0.99999964, 5.142989e-08, -1.8316571e-08, 2.190781e-09, 0.2974346, 0.95475733, 5.4550515e-08, -0.95474875, 0.2974293, 2.9307756e-10, 0.019313812, -0.007140875)
+
+[node name="HeightReference" type="Marker3D" parent="." unique_id=432523575]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0258632, 1.685118, 0)
+
+[node name="WorldMap" type="MeshInstance3D" parent="." unique_id=2029116320]
+transform = Transform3D(0.7323921, -0.68088317, 0, 0.68088317, 0.7323921, 0, 0, 0, 1, -0.56381834, 1.0020058, -1.1920929e-07)
+visible = false
+transparency = 0.34
+mesh = SubResource("PlaneMesh_g4v7s")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=837886760]
+
+[node name="ToggleSwitch" type="MeshInstance3D" parent="." unique_id=810725681]
+transform = Transform3D(0.7719524, -0.6356804, 0, 0.6356804, 0.7719524, 0, 0, 0, 1, -1.2002075, 0.73796463, -0.8356179)
+mesh = SubResource("BoxMesh_57qmd")
+script = ExtResource("3_3dx82")
+
+[node name="dampener" type="MeshInstance3D" parent="ToggleSwitch" unique_id=1667101614]
+transform = Transform3D(0.9781476, -0.2079117, 0, 0.2079117, 0.9781476, 0, 0, 0, 1, -4.656613e-10, 0.025301691, -0.295734)
+mesh = SubResource("BoxMesh_yexxc")
+
+[node name="Area3D" type="Area3D" parent="ToggleSwitch/dampener" unique_id=645406331]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ToggleSwitch/dampener/Area3D" unique_id=1263267774]
+shape = SubResource("BoxShape3D_g4v7s")
+
+[connection signal="input_event" from="ToggleSwitch/dampener/Area3D" to="ToggleSwitch" method="_on_area_3d_input_event"]

@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bpjgkx8rckh6m"]
+
+[ext_resource type="Script" uid="uid://dhgv533nqlljm" path="res://ship systems/sensor_array.gd" id="1_ujq4b"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jsomm"]
+radius = 100.0
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_g4v7s"]
+b = Vector2(0, -100)
+
+[node name="SensorArray" type="ShapeCast2D" unique_id=927382587]
+shape = SubResource("CircleShape2D_jsomm")
+target_position = Vector2(0, 0)
+script = ExtResource("1_ujq4b")
+
+[node name="Tracker" type="Area2D" parent="." unique_id=1009236379]
+collision_layer = 0
+
+[node name="TrackerCone" type="CollisionPolygon2D" parent="Tracker" unique_id=1226532600]
+polygon = PackedVector2Array(0, 0, 50, -100, -50, -100)
+
+[node name="Sweeper" type="Area2D" parent="." unique_id=1280017078]
+
+[node name="Ray" type="CollisionShape2D" parent="Sweeper" unique_id=1551692116]
+shape = SubResource("SegmentShape2D_g4v7s")

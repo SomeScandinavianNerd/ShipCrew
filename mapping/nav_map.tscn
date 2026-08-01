@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://d2ln8ya56xtwf"]
+
+[ext_resource type="Script" uid="uid://dwusmliccqx8y" path="res://mapping/nav_map.gd" id="1_oeqrf"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_oeqrf"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_yf5fn"]
+
+[node name="Shape" type="Polygon2D" unique_id=1172011677]
+texture = SubResource("PlaceholderTexture2D_oeqrf")
+script = ExtResource("1_oeqrf")
+
+[node name="NavMap" type="NavigationRegion2D" parent="." unique_id=2052895158]
+navigation_polygon = SubResource("NavigationPolygon_yf5fn")
