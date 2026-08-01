@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bka4tspmubjnl"]
+
+[ext_resource type="PackedScene" uid="uid://bpjgkx8rckh6m" path="res://ship systems/sensor_array.tscn" id="2_pcbtu"]
+
+[node name="npc_ship" type="CharacterBody2D" unique_id=1810722369 groups=["Ship"]]
+
+[node name="ShipShape" type="Polygon2D" parent="." unique_id=1398911172]
+polygon = PackedVector2Array(10, -10, 10, 10, -10, 10, -10, -10)
+
+[node name="ShipCollider" type="CollisionPolygon2D" parent="." unique_id=1544137804]
+polygon = PackedVector2Array(10, -10, 10, 10, -10, 10, -10, -10)
+
+[node name="SensorArray" parent="." unique_id=927382587 instance=ExtResource("2_pcbtu")]

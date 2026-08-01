@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://jyv0ays8juvr"]
+
+[ext_resource type="PackedScene" uid="uid://cmfsibjw1qcyq" path="res://mapping/plr_ship.tscn" id="1_71hgh"]
+[ext_resource type="PackedScene" uid="uid://bka4tspmubjnl" path="res://mapping/base_npc.tscn" id="2_qpw6s"]
+[ext_resource type="Script" uid="uid://3bpsvxeirkyj" path="res://debug_ui_map.gd" id="3_xrrwg"]
+
+[node name="map_space" type="Node2D" unique_id=1729041462]
+
+[node name="plr_ship" parent="." unique_id=1810722369 instance=ExtResource("1_71hgh")]
+position = Vector2(709, 516)
+
+[node name="npc_ship" parent="." unique_id=1682625814 instance=ExtResource("2_qpw6s")]
+position = Vector2(504, 432)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1671993049]
+position = Vector2(571, 331)
+scale = Vector2(1.1663005, 4.38529)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1015036164]
+script = ExtResource("3_xrrwg")
+
+[node name="Directions" type="Label" parent="CanvasLayer" unique_id=639042731]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Placeholder"
+
+[connection signal="moving" from="plr_ship" to="CanvasLayer" method="_on_plr_ship_moving"]
