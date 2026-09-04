@@ -46,64 +46,52 @@ func setActive(role):
 func _physics_process(delta):
 	##An array of directions that are currently undergoing accelleration
 	var accel:Array
+	##A vector of the ship's acceleration on this frame (separate from the velocity)
+	var acceleration:Vector2
+	##A localized version of the object's velocity.
+	var speed:Vector2 = transform.basis_xform_inv(velocity)
 	if Input.is_anything_pressed():
 		if  active == false:
 			return
 		if Input.is_action_pressed("forward"):
-			velocity = velocity + transform.basis_xform(Vector2(0, -PlrShip.f_speed))
+			acceleration.y = -PlrShip.f_speed
 			accel.append("forward")
 		if Input.is_action_pressed("backward"):
-			velocity = velocity + transform.basis_xform(Vector2(0, PlrShip.b_speed))
+			acceleration.y = PlrShip.b_speed
 			accel.append("backward")
 		if Input.is_action_pressed("turn_r"):
 			self.rotate(PlrShip.turn_speed)
 		if Input.is_action_pressed("turn_l"):
 			self.rotate(-PlrShip.turn_speed)
 		if Input.is_action_pressed("strafe_l"):
-			velocity = velocity + transform.basis_xform(Vector2(-PlrShip.s_speed, 0))
+			acceleration.x = -PlrShip.s_speed
 			accel.append("left")
 		if Input.is_action_pressed("strafe_r"):
-			velocity = velocity + transform.basis_xform(Vector2(PlrShip.s_speed, 0))
+			acceleration.x = PlrShip.s_speed
 			accel.append("right")
+	
+	#Dampening is only applied, if it's actually supposed to be active.
 	if dampening == true:
-		dampen(accel)
-	move_and_slide()
+		if not ("forward" in accel or "backward" in accel):
+			#If the ship isn't actively moving forward or backwards, dampens the y-axis
+			if speed.y > 0 and speed.y > PlrShip.f_speed:
+				acceleration.y -= PlrShip.f_speed
+			elif speed.y < 0 and speed.y < -PlrShip.b_speed:
+				acceleration.y += PlrShip.b_speed
+			elif speed.y != 0:
+				acceleration.y -= speed.y
+		if not ("left" in accel or "right" in accel):
+			#If the ship isn't actively strafing, apply the dampeners to the x-axis.
+			if speed.x > 0 and speed.x > PlrShip.s_speed:
+				acceleration.x -= PlrShip.s_speed
+			elif speed.x < 0 and speed.x < -PlrShip.s_speed:
+				acceleration.x += PlrShip.s_speed
+			elif speed.x != 0:
+				acceleration.x -= speed.x
 
-func dampen(directions:Array):
-	##I cannot be arsed to type out this whole thing every time I need a momentum reading
-	var momentum:Vector2 = transform.basis_xform(velocity)
-	#These four are honestly just a whole lot of the same. 
-	var boosters:Array
-	if "forward" not in directions:
-		#The "backward not in directions"-part is important, to avoid doubling up on speed-boosts
-		if momentum.y < 0 && "backward" not in directions:
-			boosters.append("boosting back")
-			if momentum.y > -PlrShip.b_speed:
-				velocity = transform.basis_xform(Vector2(momentum.x, 0))
-			else:
-				velocity = velocity + transform.basis_xform(Vector2(0, PlrShip.b_speed))
-	if "backward" not in directions:
-		if momentum.y > 0 && "forward" not in directions:
-			boosters.append("boosting forward")
-			if momentum.y < PlrShip.f_speed:
-				velocity = transform.basis_xform(Vector2(momentum.x, 0))
-			else:
-				velocity = velocity + transform.basis_xform(Vector2(0, -PlrShip.f_speed))
-	if "left" not in directions:
-		if momentum.x < 0 && "right" not in directions:
-			boosters.append("boosting right")
-			if momentum.x > -PlrShip.s_speed:
-				velocity = transform.basis_xform(Vector2(0, momentum.y))
-			else:
-				velocity = velocity + transform.basis_xform(Vector2(PlrShip.s_speed, 0))
-	if "right" not in directions:
-		if momentum.x > 0 && "left" not in directions:
-			boosters.append("boosting left")
-			if momentum.x < PlrShip.s_speed:
-				velocity = transform.basis_xform(Vector2(0, momentum.y))
-			else:
-				velocity = velocity + transform.basis_xform(Vector2(-PlrShip.s_speed, 0))
-	moving.emit(boosters, velocity, momentum)
+	#Adds the acceleration to the ship velocity
+	velocity = velocity + transform.basis_xform(acceleration)
+	move_and_slide()
 
 
 func reportTracking(contents:Array):
